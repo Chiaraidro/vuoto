@@ -1,32 +1,27 @@
-# First code in Git Hub
-#let's install rasater package 
+## Realizzazione del primo codice in Git Hub
 
+# Installazione dei pacchetti necessari 
 install.packages("raster")
-
 library(raster)
 
-# Questo è il primo script che useremo a lezione
-
-# install.packages("raster")
-library(raster)
-
-# Settaggio cartella di lavoro
+# Settaggio cartella di lavoro (togliendo o mettendo # scelgo il mio sistema operativo) 
 setwd("~/lab/") # Linux
 # setwd("/Users/emma/desktop/lab") #mac
 # setwd("C:/lab/") # windows
 
-# import
+# importo l'immagino con il comando brick 
 l2011 <- brick("p224r63_2011.grd")
 l2011
 
-# plot
+# plotto l'immagine appena caricata 
 plot(l2011)
 
+#plotto l'immagine con una scala di colori scelta 
 # https://www.r-graph-gallery.com/42-colors-names.html
 cl <- colorRampPalette(c("black", "grey", "light grey")) (100)
 plot(l2011, col=cl)
 
-# dev.off()
+# dev.off() per chiudere la finestra che mostra l'immagine 
 
 # Landsat ETM+
 # b1 = blu
@@ -47,12 +42,12 @@ plot(l2011$B1_sre, col=cl)
 clb <- colorRampPalette(c("dark blue", "blue", "light blue")) (100)
 plot(l2011$B1_sre, col=clb)
 
-# let's export the image and let it appear in the lab folder: kind of magic!
-pdf("banda1.pdf")
+# Esportiamo l'immagine come pdf 
+pdf("banda1.pdf") #il comando esporta il pdf direttamente nella cartella di lavoro da noi settata 
 plot(l2011$B1_sre, col=clb)
 dev.off()
 
-png("banda1.png")
+png("banda1.png") #esportiamo l'immagine in formato png 
 plot(l2011$B1_sre, col=clb)
 dev.off()
 
@@ -60,25 +55,25 @@ dev.off()
 clg <- colorRampPalette(c("dark green", "green", "light green")) (100)
 plot(l2011$B2_sre, col=clg)
 
-# multiframe
-par(mfrow=c(1,2))
+# come fare un multiframe
+par(mfrow=c(1,2)) #permette di avere più plot nella stessa pagina
 plot(l2011$B1_sre, col=clb)
 plot(l2011$B2_sre, col=clg)
 dev.off()
 
-# export multiframe plot
+#esportiamo il multiframe 
 pdf("multiframe.pdf")
 par(mfrow=c(1,2))
 plot(l2011$B1_sre, col=clb)
 plot(l2011$B2_sre, col=clg)
 dev.off()
 
-# exercise: revert the multiframe
+# esercizio: inverti il multiframe
 par(mfrow=c(2,1))
 plot(l2011$B1_sre, col=clb)
 plot(l2011$B2_sre, col=clg)
 
-# let's plot the first four bands
+# Plottiamo le prime quattro bande 
 par(mfrow=c(2,2))
 # blue
 plot(l2011$B1_sre, col=clb)
@@ -91,12 +86,10 @@ plot(l2011$B3_sre, col=clr)
 clnir <- colorRampPalette(c("red", "orange", "yellow")) (100)
 plot(l2011$B4_sre, col=clnir)
 
-# Day #3
-
-# Plot of l2011 in the NIR channel (NIR band)
-clnir <- colorRampPalette(c("red", "orange", "yellow")) (100)
+# Plot di l2011  (NIR band)
+clnir <- colorRampPalette(c("red", "orange", "yellow")) (100) #specifichiamo sempre la scala di colore 
 plot(l2011$B4_sre, col=clnir)
-# or:
+# oppure posso usare anche il metodo seguente 
 plot(l2011[[4]])
 
 # Landsat ETM+
@@ -112,14 +105,12 @@ plotRGB(l2011, r=3, g=2, b=4, stretch="lin")
 
 plotRGB(l2011, r=3, g=4, b=2, stretch="hist")
 
-# Exercise: build a multiframe with visible RGB
-# (linear stretch) on top of false colours
-# (histogram stretch)
+# Esercizio:crea un multiframe con il visibile RGB
 par(mfrow=c(2,1))
 plotRGB(l2011, r=3, g=2, b=1, stretch="lin")
 plotRGB(l2011, r=3, g=4, b=2, stretch="hist")
 
-# Exercise: upload the image from 1988
+# Esercizio: carica l'immagine del 1988
 l1988 <- brick("p224r63_1988_masked.grd")
 l1988
 
@@ -127,12 +118,7 @@ par(mfrow=c(2,1))
 plotRGB(l1988, r=4, g=3, b=2, stretch="lin")
 plotRGB(l2011, r=4, g=3, b=2, stretch="lin")
 
-#Exercise: plot in RGB space (natural colors) 
-
-
-
-
-#Ecercise: plot the NIR band 
+#Ecercise: plot la banda NIR 
 plot(l2011[[4]])
 
 #rendiamo l'immagine con i colori del visibile (come se la vedessimo con i nostri occhi)
